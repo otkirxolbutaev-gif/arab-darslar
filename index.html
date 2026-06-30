@@ -15,128 +15,43 @@
     padding: 16px;
     min-height: 100vh;
   }
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .header h1 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 4px;
-    direction: ltr;
-  }
-  .header p {
-    font-size: 13px;
-    color: var(--tg-theme-hint-color, #8A8780);
-    margin: 0;
-    direction: ltr;
-  }
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    direction: ltr;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1.5px solid #E0DCD0;
-    background: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    direction: ltr;
-  }
-  .tab-btn.active {
-    background: #D85A30;
-    color: #fff;
-    border-color: #D85A30;
-  }
-  .verb-picker {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    direction: ltr;
-  }
-  .verb-btn {
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1.5px solid #E0DCD0;
-    background: #fff;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .verb-btn.active {
-    background: #FAECE7;
-    border-color: #D85A30;
-    color: #993C1D;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .pcard {
-    background: #fff;
-    border-radius: 14px;
-    padding: 14px 8px;
-    text-align: center;
-    cursor: pointer;
-    border: 1.5px solid #E0DCD0;
-    transition: border-color 0.2s;
-  }
-  .pcard.shown {
-    border-color: #D85A30;
-  }
-  .pcard .label {
-    font-size: 13px;
-    color: #8A8780;
-    margin-bottom: 6px;
-    direction: ltr;
-  }
-  .pcard .emoji {
-    font-size: 26px;
-  }
-  .pcard .word {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 10px;
-    min-height: 28px;
-    color: #993C1D;
-  }
-  .controls {
-    display: flex;
-    gap: 10px;
-    direction: ltr;
-  }
-  .btn {
-    flex: 1;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .btn-primary {
-    background: #D85A30;
-    color: #fff;
-  }
-  .btn-secondary {
-    background: #fff;
-    color: #2C2C2A;
-    border: 1.5px solid #E0DCD0;
-  }
-  .score {
-    text-align: center;
-    margin-top: 16px;
-    font-size: 13px;
-    color: #8A8780;
-    direction: ltr;
-  }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; direction: ltr; }
+  .header p { font-size: 13px; color: var(--tg-theme-hint-color, #8A8780); margin: 0; direction: ltr; }
+  .mode-tabs { display: flex; gap: 8px; margin-bottom: 16px; direction: ltr; }
+  .mode-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid #E0DCD0; background: #fff; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .mode-btn.active { background: #D85A30; color: #fff; border-color: #D85A30; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; direction: ltr; }
+  .tab-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid #E0DCD0; background: #fff; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .tab-btn.active { background: #FAECE7; color: #993C1D; border-color: #D85A30; }
+  .verb-picker { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; direction: ltr; }
+  .verb-btn { padding: 8px 12px; border-radius: 8px; border: 1.5px solid #E0DCD0; background: #fff; font-size: 13px; cursor: pointer; }
+  .verb-btn.active { background: #FAECE7; border-color: #D85A30; color: #993C1D; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .pcard { background: #fff; border-radius: 14px; padding: 14px 8px; text-align: center; cursor: pointer; border: 1.5px solid #E0DCD0; transition: border-color 0.2s; }
+  .pcard.shown { border-color: #D85A30; }
+  .pcard .label { font-size: 13px; color: #8A8780; margin-bottom: 6px; direction: ltr; }
+  .pcard .emoji { font-size: 26px; }
+  .pcard .word { font-size: 20px; font-weight: 600; margin-top: 10px; min-height: 28px; color: #993C1D; }
+  .controls { display: flex; gap: 10px; direction: ltr; }
+  .btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .btn-primary { background: #D85A30; color: #fff; }
+  .btn-secondary { background: #fff; color: #2C2C2A; border: 1.5px solid #E0DCD0; }
+  .score { text-align: center; margin-top: 16px; font-size: 13px; color: #8A8780; direction: ltr; }
+  .quiz-progress { text-align: center; font-size: 13px; color: #8A8780; margin-bottom: 12px; direction: ltr; }
+  .quiz-question { background: #fff; border-radius: 14px; border: 1.5px solid #E0DCD0; padding: 24px 16px; text-align: center; margin-bottom: 16px; }
+  .quiz-question .form-label { font-size: 14px; color: #8A8780; margin-bottom: 8px; direction: ltr; }
+  .quiz-question .verb-display { font-size: 22px; font-weight: 600; color: #993C1D; margin-bottom: 6px; }
+  .quiz-question .verb-meaning { font-size: 13px; color: #8A8780; direction: ltr; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .quiz-option { background: #fff; border: 1.5px solid #E0DCD0; border-radius: 12px; padding: 16px 8px; font-size: 18px; font-weight: 600; cursor: pointer; text-align: center; }
+  .quiz-option.correct { background: #EAF3DE; border-color: #639922; color: #27500A; }
+  .quiz-option.wrong { background: #FCEBEB; border-color: #E24B4A; color: #791F1F; }
+  .quiz-option:disabled { cursor: default; }
+  .quiz-result { text-align: center; padding: 32px 16px; }
+  .quiz-result .big-score { font-size: 48px; font-weight: 600; color: #D85A30; margin: 16px 0 8px; direction: ltr; }
+  .quiz-result .result-msg { font-size: 15px; color: #8A8780; margin-bottom: 24px; direction: ltr; }
+  .hidden { display: none; }
 </style>
 </head>
 <body>
@@ -146,41 +61,70 @@
   <p>Fe'l tasrifini o'rganamiz</p>
 </div>
 
-<div class="tabs">
-  <button class="tab-btn active" id="tab-madi">الماضي (o'tgan)</button>
-  <button class="tab-btn" id="tab-mudari">المضارع (hozirgi)</button>
+<div class="mode-tabs">
+  <button class="mode-btn active" id="mode-learn">O'rganish</button>
+  <button class="mode-btn" id="mode-quiz">Test</button>
 </div>
 
-<div class="verb-picker" id="verb-picker"></div>
+<div id="learn-view">
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-madi">الماضي (o'tgan)</button>
+    <button class="tab-btn" id="tab-mudari">المضارع (hozirgi)</button>
+  </div>
 
-<div class="grid">
-  <div class="pcard" data-form="huwa">
-    <div class="label">هُوَ</div>
-    <div class="emoji" id="huwa-emoji">🧒</div>
-    <div class="word" id="huwa-word">؟</div>
+  <div class="verb-picker" id="verb-picker"></div>
+
+  <div class="grid">
+    <div class="pcard" data-form="huwa">
+      <div class="label">هُوَ</div>
+      <div class="emoji" id="huwa-emoji">🧒</div>
+      <div class="word" id="huwa-word">؟</div>
+    </div>
+    <div class="pcard" data-form="huma">
+      <div class="label">هُمَا</div>
+      <div class="emoji" id="huma-emoji">🧒🧒</div>
+      <div class="word" id="huma-word">؟</div>
+    </div>
+    <div class="pcard" data-form="hum">
+      <div class="label">هُمْ</div>
+      <div class="emoji" id="hum-emoji">🧒🧒🧒</div>
+      <div class="word" id="hum-word">؟</div>
+    </div>
   </div>
-  <div class="pcard" data-form="huma">
-    <div class="label">هُمَا</div>
-    <div class="emoji" id="huma-emoji">🧒🧒</div>
-    <div class="word" id="huma-word">؟</div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="reveal-btn">Javobni ko'rsatish</button>
+    <button class="btn btn-secondary" id="next-btn">Keyingi →</button>
   </div>
-  <div class="pcard" data-form="hum">
-    <div class="label">هُمْ</div>
-    <div class="emoji" id="hum-emoji">🧒🧒🧒</div>
-    <div class="word" id="hum-word">؟</div>
-  </div>
+
+  <div class="score" id="score">Fe'l: <span id="verb-count">1</span> / <span id="verb-total">5</span></div>
 </div>
 
-<div class="controls">
-  <button class="btn btn-primary" id="reveal-btn">Javobni ko'rsatish</button>
-  <button class="btn btn-secondary" id="next-btn">Keyingi →</button>
+<div id="quiz-view" class="hidden">
+  <div id="quiz-active">
+    <div class="quiz-progress">Savol <span id="q-num">1</span> / <span id="q-total">10</span> &middot; Ball: <span id="q-score">0</span></div>
+    <div class="quiz-question">
+      <div class="form-label" id="q-form-label">هُوَ uchun</div>
+      <div class="verb-display" id="q-verb">كَتَبَ</div>
+      <div class="verb-meaning" id="q-meaning">(yozdi)</div>
+    </div>
+    <div class="quiz-options" id="q-options"></div>
+  </div>
+  <div id="quiz-finished" class="hidden">
+    <div class="quiz-result">
+      <div style="font-size:14px;color:#8A8780;">Test yakunlandi</div>
+      <div class="big-score"><span id="final-score">0</span>/10</div>
+      <div class="result-msg" id="final-msg">Yana urinib ko'ring</div>
+      <button class="btn btn-primary" id="share-btn" style="width:100%; margin-bottom:10px;">Natijani ulashish</button>
+      <button class="btn btn-secondary" id="restart-btn" style="width:100%;">Qayta boshlash</button>
+    </div>
+  </div>
 </div>
-
-<div class="score" id="score">Fe'l: <span id="verb-count">1</span> / <span id="verb-total">5</span></div>
 
 <script>
 const tg = window.Telegram && window.Telegram.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
+const WEBAPP_URL = 'https://otkirxolbutaev-gif.github.io/arab-darslar/';
 
 const verbs = {
   madi: [
@@ -199,6 +143,8 @@ const verbs = {
   ]
 };
 
+const formLabels = {huwa: 'هُوَ uchun', huma: 'هُمَا uchun', hum: 'هُمْ uchun'};
+
 let mode = 'madi';
 let currentVerb = 0;
 let revealed = false;
@@ -213,12 +159,12 @@ function buildPicker() {
     const b = document.createElement('button');
     b.className = 'verb-btn' + (i === currentVerb ? ' active' : '');
     b.textContent = v.ar + ' (' + v.uz + ')';
-    b.onclick = () => { currentVerb = i; revealed = false; render(); };
+    b.onclick = () => { currentVerb = i; revealed = false; renderLearn(); };
     picker.appendChild(b);
   });
 }
 
-function render() {
+function renderLearn() {
   const v = verbs[mode][currentVerb];
   document.getElementById('huwa-emoji').textContent = v.emoji;
   document.getElementById('huma-emoji').textContent = v.emoji + v.emoji;
@@ -226,9 +172,7 @@ function render() {
   document.getElementById('huwa-word').textContent = revealed ? v.huwa : '؟';
   document.getElementById('huma-word').textContent = revealed ? v.huma : '؟';
   document.getElementById('hum-word').textContent = revealed ? v.hum : '؟';
-  document.querySelectorAll('.pcard').forEach(c => {
-    c.classList.toggle('shown', revealed);
-  });
+  document.querySelectorAll('.pcard').forEach(c => { c.classList.toggle('shown', revealed); });
   document.getElementById('verb-count').textContent = currentVerb + 1;
   document.getElementById('verb-total').textContent = verbs[mode].length;
   buildPicker();
@@ -236,29 +180,161 @@ function render() {
 
 document.getElementById('reveal-btn').onclick = () => {
   revealed = true;
-  render();
+  renderLearn();
   if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 };
 document.getElementById('next-btn').onclick = () => {
   currentVerb = (currentVerb + 1) % verbs[mode].length;
   revealed = false;
-  render();
+  renderLearn();
 };
 tabMadi.onclick = () => {
   mode = 'madi'; currentVerb = 0; revealed = false;
   tabMadi.classList.add('active'); tabMudari.classList.remove('active');
-  render();
+  renderLearn();
 };
 tabMudari.onclick = () => {
   mode = 'mudari'; currentVerb = 0; revealed = false;
   tabMudari.classList.add('active'); tabMadi.classList.remove('active');
-  render();
+  renderLearn();
 };
 document.querySelectorAll('.pcard').forEach(c => {
-  c.onclick = () => { revealed = true; render(); };
+  c.onclick = () => { revealed = true; renderLearn(); };
 });
 
-render();
+const modeLearn = document.getElementById('mode-learn');
+const modeQuiz = document.getElementById('mode-quiz');
+const learnView = document.getElementById('learn-view');
+const quizView = document.getElementById('quiz-view');
+
+modeLearn.onclick = () => {
+  modeLearn.classList.add('active'); modeQuiz.classList.remove('active');
+  learnView.classList.remove('hidden'); quizView.classList.add('hidden');
+};
+modeQuiz.onclick = () => {
+  modeQuiz.classList.add('active'); modeLearn.classList.remove('active');
+  quizView.classList.remove('hidden'); learnView.classList.add('hidden');
+  startQuiz();
+};
+
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+
+function buildQuizQuestions() {
+  const allForms = ['huwa', 'huma', 'hum'];
+  const pool = [];
+  ['madi', 'mudari'].forEach(m => {
+    verbs[m].forEach(v => {
+      allForms.forEach(f => { pool.push({verb: v, mode: m, form: f, answer: v[f]}); });
+    });
+  });
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 10);
+}
+
+function buildOptions(correct, q) {
+  const opts = new Set([correct]);
+  const sameFormPool = [];
+  ['madi', 'mudari'].forEach(m => {
+    verbs[m].forEach(v => { if (v !== q.verb) sameFormPool.push(v[q.form]); });
+  });
+  for (let i = sameFormPool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [sameFormPool[i], sameFormPool[j]] = [sameFormPool[j], sameFormPool[i]];
+  }
+  for (const opt of sameFormPool) {
+    if (opts.size >= 4) break;
+    opts.add(opt);
+  }
+  const arr = Array.from(opts);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  quizQuestions = buildQuizQuestions();
+  quizIndex = 0;
+  quizScore = 0;
+  document.getElementById('quiz-active').classList.remove('hidden');
+  document.getElementById('quiz-finished').classList.add('hidden');
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const q = quizQuestions[quizIndex];
+  document.getElementById('q-num').textContent = quizIndex + 1;
+  document.getElementById('q-total').textContent = quizQuestions.length;
+  document.getElementById('q-score').textContent = quizScore;
+  document.getElementById('q-form-label').textContent = formLabels[q.form];
+  document.getElementById('q-verb').textContent = q.verb.ar;
+  document.getElementById('q-meaning').textContent = '(' + q.verb.uz + ')';
+
+  const opts = buildOptions(q.answer, q);
+  const optDiv = document.getElementById('q-options');
+  optDiv.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(opt, q.answer, btn, optDiv);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(selected, correct, btn, optDiv) {
+  const allBtns = optDiv.querySelectorAll('.quiz-option');
+  allBtns.forEach(b => b.disabled = true);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    quizScore++;
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+  }
+
+  setTimeout(() => {
+    quizIndex++;
+    if (quizIndex >= quizQuestions.length) {
+      finishQuiz();
+    } else {
+      renderQuiz();
+    }
+  }, 900);
+}
+
+function finishQuiz() {
+  document.getElementById('quiz-active').classList.add('hidden');
+  document.getElementById('quiz-finished').classList.remove('hidden');
+  document.getElementById('final-score').textContent = quizScore;
+  const msg = document.getElementById('final-msg');
+  if (quizScore >= 8) msg.textContent = 'Ajoyib natija!';
+  else if (quizScore >= 5) msg.textContent = 'Yaxshi, davom eting!';
+  else msg.textContent = 'Yana mashq qiling!';
+}
+
+document.getElementById('share-btn').onclick = () => {
+  const text = `Men Fe'l tasrifi testida ${quizScore}/${quizQuestions.length} ball oldim! Sen ham sinab ko'r:`;
+  const shareUrl = 'https://t.me/share/url?url=' + encodeURIComponent(WEBAPP_URL) + '&text=' + encodeURIComponent(text);
+  if (tg && tg.openTelegramLink) {
+    tg.openTelegramLink(shareUrl);
+  } else {
+    window.open(shareUrl, '_blank');
+  }
+};
+
+document.getElementById('restart-btn').onclick = startQuiz;
+
+renderLearn();
 </script>
 </body>
 </html>
