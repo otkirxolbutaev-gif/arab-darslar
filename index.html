@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="uz" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fe'l tasrifi mashqi</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, 'Segoe UI', Tahoma, sans-serif;
+    background: var(--tg-theme-bg-color, #FAF7F2);
+    color: var(--tg-theme-text-color, #2C2C2A);
+    padding: 16px;
+    min-height: 100vh;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    direction: ltr;
+  }
+  .header p {
+    font-size: 13px;
+    color: var(--tg-theme-hint-color, #8A8780);
+    margin: 0;
+    direction: ltr;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    direction: ltr;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #E0DCD0;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    direction: ltr;
+  }
+  .tab-btn.active {
+    background: #D85A30;
+    color: #fff;
+    border-color: #D85A30;
+  }
+  .verb-picker {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    direction: ltr;
+  }
+  .verb-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #E0DCD0;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .verb-btn.active {
+    background: #FAECE7;
+    border-color: #D85A30;
+    color: #993C1D;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pcard {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    border: 1.5px solid #E0DCD0;
+    transition: border-color 0.2s;
+  }
+  .pcard.shown {
+    border-color: #D85A30;
+  }
+  .pcard .label {
+    font-size: 13px;
+    color: #8A8780;
+    margin-bottom: 6px;
+    direction: ltr;
+  }
+  .pcard .emoji {
+    font-size: 26px;
+  }
+  .pcard .word {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+    min-height: 28px;
+    color: #993C1D;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    direction: ltr;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: #D85A30;
+    color: #fff;
+  }
+  .btn-secondary {
+    background: #fff;
+    color: #2C2C2A;
+    border: 1.5px solid #E0DCD0;
+  }
+  .score {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #8A8780;
+    direction: ltr;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>تَصْرِيفُ الْفِعْلِ</h1>
+  <p>Fe'l tasrifini o'rganamiz</p>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" id="tab-madi">الماضي (o'tgan)</button>
+  <button class="tab-btn" id="tab-mudari">المضارع (hozirgi)</button>
+</div>
+
+<div class="verb-picker" id="verb-picker"></div>
+
+<div class="grid">
+  <div class="pcard" data-form="huwa">
+    <div class="label">هُوَ</div>
+    <div class="emoji" id="huwa-emoji">🧒</div>
+    <div class="word" id="huwa-word">؟</div>
+  </div>
+  <div class="pcard" data-form="huma">
+    <div class="label">هُمَا</div>
+    <div class="emoji" id="huma-emoji">🧒🧒</div>
+    <div class="word" id="huma-word">؟</div>
+  </div>
+  <div class="pcard" data-form="hum">
+    <div class="label">هُمْ</div>
+    <div class="emoji" id="hum-emoji">🧒🧒🧒</div>
+    <div class="word" id="hum-word">؟</div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-primary" id="reveal-btn">Javobni ko'rsatish</button>
+  <button class="btn btn-secondary" id="next-btn">Keyingi →</button>
+</div>
+
+<div class="score" id="score">Fe'l: <span id="verb-count">1</span> / <span id="verb-total">5</span></div>
+
+<script>
+const tg = window.Telegram && window.Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); }
+
+const verbs = {
+  madi: [
+    {ar:'كَتَبَ', uz:'yozdi', huwa:'كَتَبَ', huma:'كَتَبَا', hum:'كَتَبُوا', emoji:'✍️'},
+    {ar:'قَالَ', uz:'aytdi', huwa:'قَالَ', huma:'قَالَا', hum:'قَالُوا', emoji:'💬'},
+    {ar:'زَرَعَ', uz:'ekdi', huwa:'زَرَعَ', huma:'زَرَعَا', hum:'زَرَعُوا', emoji:'🌱'},
+    {ar:'أَكَلَ', uz:'yedi', huwa:'أَكَلَ', huma:'أَكَلَا', hum:'أَكَلُوا', emoji:'🍽️'},
+    {ar:'طَبَخَ', uz:'pishirdi', huwa:'طَبَخَ', huma:'طَبَخَا', hum:'طَبَخُوا', emoji:'🍳'}
+  ],
+  mudari: [
+    {ar:'يَكْتُبُ', uz:'yozyapti', huwa:'يَكْتُبُ', huma:'يَكْتُبَانِ', hum:'يَكْتُبُونَ', emoji:'✍️'},
+    {ar:'يَقُولُ', uz:'aytyapti', huwa:'يَقُولُ', huma:'يَقُولَانِ', hum:'يَقُولُونَ', emoji:'💬'},
+    {ar:'يَزْرَعُ', uz:'ekyapti', huwa:'يَزْرَعُ', huma:'يَزْرَعَانِ', hum:'يَزْرَعُونَ', emoji:'🌱'},
+    {ar:'يَأْكُلُ', uz:'yeyapti', huwa:'يَأْكُلُ', huma:'يَأْكُلَانِ', hum:'يَأْكُلُونَ', emoji:'🍽️'},
+    {ar:'يَطْبُخُ', uz:'pishiryapti', huwa:'يَطْبُخُ', huma:'يَطْبُخَانِ', hum:'يَطْبُخُونَ', emoji:'🍳'}
+  ]
+};
+
+let mode = 'madi';
+let currentVerb = 0;
+let revealed = false;
+
+const picker = document.getElementById('verb-picker');
+const tabMadi = document.getElementById('tab-madi');
+const tabMudari = document.getElementById('tab-mudari');
+
+function buildPicker() {
+  picker.innerHTML = '';
+  verbs[mode].forEach((v, i) => {
+    const b = document.createElement('button');
+    b.className = 'verb-btn' + (i === currentVerb ? ' active' : '');
+    b.textContent = v.ar + ' (' + v.uz + ')';
+    b.onclick = () => { currentVerb = i; revealed = false; render(); };
+    picker.appendChild(b);
+  });
+}
+
+function render() {
+  const v = verbs[mode][currentVerb];
+  document.getElementById('huwa-emoji').textContent = v.emoji;
+  document.getElementById('huma-emoji').textContent = v.emoji + v.emoji;
+  document.getElementById('hum-emoji').textContent = v.emoji + v.emoji + v.emoji;
+  document.getElementById('huwa-word').textContent = revealed ? v.huwa : '؟';
+  document.getElementById('huma-word').textContent = revealed ? v.huma : '؟';
+  document.getElementById('hum-word').textContent = revealed ? v.hum : '؟';
+  document.querySelectorAll('.pcard').forEach(c => {
+    c.classList.toggle('shown', revealed);
+  });
+  document.getElementById('verb-count').textContent = currentVerb + 1;
+  document.getElementById('verb-total').textContent = verbs[mode].length;
+  buildPicker();
+}
+
+document.getElementById('reveal-btn').onclick = () => {
+  revealed = true;
+  render();
+  if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+};
+document.getElementById('next-btn').onclick = () => {
+  currentVerb = (currentVerb + 1) % verbs[mode].length;
+  revealed = false;
+  render();
+};
+tabMadi.onclick = () => {
+  mode = 'madi'; currentVerb = 0; revealed = false;
+  tabMadi.classList.add('active'); tabMudari.classList.remove('active');
+  render();
+};
+tabMudari.onclick = () => {
+  mode = 'mudari'; currentVerb = 0; revealed = false;
+  tabMudari.classList.add('active'); tabMadi.classList.remove('active');
+  render();
+};
+document.querySelectorAll('.pcard').forEach(c => {
+  c.onclick = () => { revealed = true; render(); };
+});
+
+render();
+</script>
+</body>
+</html>
