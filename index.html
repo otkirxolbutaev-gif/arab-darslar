@@ -323,7 +323,7 @@ function finishQuiz() {
 }
 
 document.getElementById('share-btn').onclick = () => {
-  const text = `Men Fe'l tasrifi testida ${quizScore}/${quizQuestions.length} ball oldim! Sen ham sinab ko'r:`;
+  const text = ``Men Arab tili testida ${quizScore}/${quizQuestions.length} ball oldim! Sen ham sinab ko'r:`;
   const shareUrl = 'https://t.me/share/url?url=' + encodeURIComponent(WEBAPP_URL) + '&text=' + encodeURIComponent(text);
   if (tg && tg.openTelegramLink) {
     tg.openTelegramLink(shareUrl);
