@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="uz" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arab tili testi</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--tg-theme-bg-color, #f0f4ff);
+    color: var(--tg-theme-text-color, #1a1a2e);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c5f8a;
+    direction: rtl;
+  }
+
+  .mavzu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .mavzu-btn {
+    background: white;
+    border: 2px solid #2c5f8a;
+    border-radius: 16px;
+    padding: 18px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c5f8a;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    direction: ltr;
+  }
+
+  .mavzu-btn:active {
+    background: #2c5f8a;
+    color: white;
+    transform: scale(0.97);
+  }
+
+  .mavzu-btn .emoji { font-size: 26px; display: block; margin-bottom: 6px; }
+
+  /* Quiz screen */
+  .quiz-screen { width: 100%; max-width: 420px; display: none; flex-direction: column; align-items: center; gap: 16px; }
+
+  .progress-bar-wrap {
+    width: 100%;
+    background: #dde8f5;
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #2c5f8a, #4a90d9);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text {
+    font-size: 13px;
+    color: #666;
+    direction: ltr;
+    align-self: flex-end;
+  }
+
+  .savol-karta {
+    background: white;
+    border-radius: 20px;
+    padding: 24px 20px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(44,95,138,0.12);
+    direction: rtl;
+  }
+
+  .savol-karta .arab {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .savol-karta .izoh {
+    font-size: 14px;
+    color: #888;
+    direction: ltr;
+  }
+
+  .javoblar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .javob-btn {
+    background: white;
+    border: 2px solid #dde8f5;
+    border-radius: 14px;
+    padding: 14px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c5f8a;
+    cursor: pointer;
+    transition: all 0.2s;
+    direction: ltr;
+    text-align: center;
+  }
+
+  .javob-btn:hover { border-color: #2c5f8a; background: #eef4fb; }
+  .javob-btn.togri { background: #d4edda; border-color: #28a745; color: #155724; }
+  .javob-btn.xato  { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+  .javob-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+
+  .natija-matn {
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    direction: ltr;
+    display: none;
+  }
+
+  .natija-matn.togri { background: #d4edda; color: #155724; }
+  .natija-matn.xato  { background: #f8d7da; color: #721c24; }
+
+  /* Result screen */
+  .natija-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .natija-doira {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2c5f8a, #4a90d9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 24px rgba(44,95,138,0.3);
+  }
+
+  .natija-doira .ball { font-size: 42px; font-weight: 800; line-height: 1; }
+  .natija-doira .jami { font-size: 16px; opacity: 0.85; }
+
+  .natija-xabar { font-size: 20px; font-weight: 700; color: #2c5f8a; }
+  .natija-izoh  { font-size: 14px; color: #666; direction: ltr; }
+
+  .qayta-btn {
+    background: linear-gradient(135deg, #2c5f8a, #4a90d9);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    direction: ltr;
+    transition: transform 0.2s;
+  }
+
+  .qayta-btn:active { transform: scale(0.97); }
+
+  .orqaga-btn {
+    background: transparent;
+    border: 2px solid #2c5f8a;
+    color: #2c5f8a;
+    border-radius: 16px;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    direction: ltr;
+  }
+</style>
+</head>
+<body>
+
+<!-- Mavzu tanlash ekrani -->
+<div id="mavzuScreen">
+  <div class="header">
+    <h1>🕌 Arab tili testi</h1>
+    <p style="font-size:13px;color:#888;direction:ltr;margin-top:6px;">Mavzuni tanlang</p>
+  </div>
+  <div class="mavzu-grid">
+    <button class="mavzu-btn" onclick="boshla('Harflar')">
+      <span class="emoji">🔤</span>Harflar
+    </button>
+    <button class="mavzu-btn" onclick="boshla('Meva-sabzavot')">
+      <span class="emoji">🍎</span>Meva-sabzavot
+    </button>
+    <button class="mavzu-btn" onclick="boshla('Gaplar')">
+      <span class="emoji">💬</span>Gaplar
+    </button>
+    <button class="mavzu-btn" onclick="boshla('Joylashuv')">
+      <span class="emoji">📍</span>Joylashuv
+    </button>
+    <button class="mavzu-btn" onclick="boshla('Felllar')">
+      <span class="emoji">🏃</span>Fe'llar
+    </button>
+    <button class="mavzu-btn" onclick="boshla('Kunlar')">
+      <span class="emoji">📅</span>Kunlar
+    </button>
+  </div>
+</div>
+
+<!-- Quiz ekrani -->
+<div class="quiz-screen" id="quizScreen">
+  <div class="progress-text" id="progressText">1 / 10</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:10%"></div>
+  </div>
+  <div class="savol-karta">
+    <div class="arab" id="savolMatn"></div>
+    <div class="izoh" id="savolIzoh"></div>
+  </div>
+  <div class="javoblar" id="javoblar"></div>
+  <div class="natija-matn" id="natijaMtn"></div>
+</div>
+
+<!-- Natija ekrani -->
+<div class="natija-screen" id="natijScreen">
+  <div class="natija-doira">
+    <div class="ball" id="ballMatn">0</div>
+    <div class="jami" id="jamiMatn">/ 10</div>
+  </div>
+  <div class="natija-xabar" id="natijXabar"></div>
+  <div class="natija-izoh" id="natijIzoh"></div>
+  <button class="qayta-btn" onclick="qaytaBoshla()">🔄 Qayta urinish</button>
+  <button class="orqaga-btn" onclick="mavzuTanlash()">← Mavzu tanlash</button>
+</div>
+
+<script>
+const savollarDB = {
+  "Harflar": [
+    {s:"Bu harf qaysi? → ب", j:["Ba","Ta","Sa","Alif"], t:"Ba"},
+    {s:"Bu harf qaysi? → ت", j:["Ba","Ta","Jim","Dal"], t:"Ta"},
+    {s:"Bu harf qaysi? → س", j:["Ba","Ta","Sa","Ha"], t:"Sa"},
+    {s:"Bu harf qaysi? → ج", j:["Jim","Ha","Xo","Dal"], t:"Jim"},
+    {s:"Bu harf qaysi? → د", j:["Ra","Zay","Dal","Waw"], t:"Dal"},
+    {s:"Bu harf qaysi? → ر", j:["Dal","Ra","Zay","Sin"], t:"Ra"},
+    {s:"Bu harf qaysi? → ش", j:["Shin","Sin","Sod","Dod"], t:"Shin"},
+    {s:"Bu harf qaysi? → ص", j:["Sin","Shin","Sod","Dod"], t:"Sod"},
+    {s:"Bu harf qaysi? → ع", j:["Ayn","Ghayn","Ha","Xo"], t:"Ayn"},
+    {s:"Bu harf qaysi? → م", j:["Nun","Mim","Waw","Ha"], t:"Mim"},
+  ],
+  "Meva-sabzavot": [
+    {s:"🍆 Sabzavot nomi (arabcha)?", j:["Khiyar","Bazinjon","Tamatim","Filfil"], t:"Bazinjon"},
+    {s:"🥒 Sabzavot nomi (arabcha)?", j:["Khiyar","Laymun","Filfil","Tamatim"], t:"Khiyar"},
+    {s:"🍅 Sabzavot nomi (arabcha)?", j:["Tuffah","Tamatim","Bazinjon","Khiyar"], t:"Tamatim"},
+    {s:"🌶️ Sabzavot nomi (arabcha)?", j:["Filfil","Khiyar","Laymun","Bazinjon"], t:"Filfil"},
+    {s:"🍎 Meva nomi (arabcha)?", j:["Laymun","Tuffah","Tamatim","Filfil"], t:"Tuffah"},
+    {s:"🍋 Meva nomi (arabcha)?", j:["Laymun","Filfil","Bazinjon","Tuffah"], t:"Laymun"},
+  ],
+  "Gaplar": [
+    {s:"الأُمُّ تَشْتَرِي ...", i:"Ona ... sotib oladi", j:["bilnuqud","bilhisab","bilbai'","bilbait"], t:"bilnuqud"},
+    {s:"تَطْبُخُ الأُمُّ ...", i:"Ona ... pishiradi", j:["alxudara","allaymun","alfakiha","alkhubz"], t:"alxudara"},
+    {s:"المَانجُو ...", i:"Mango ...", j:["khudratun","fakihatun","halwa","shorba"], t:"fakihatun"},
+    {s:"يَزِنُ البَائِعُ ...", i:"Sotuvchi ... tortadi", j:["alnuquda","alhisaba","alfakihata","albaita"], t:"alfakihata"},
+  ],
+  "Joylashuv": [
+    {s:"أَيْنَ هَانِي؟", i:"Hani qayerda?", j:["al-amam (oldinda)","al-khalf (orqada)","al-wasat (o'rtada)","al-yamin (o'ngda)"], t:"al-amam (oldinda)"},
+    {s:"أَيْنَ سَامِي؟", i:"Sami qayerda?", j:["al-amam (oldinda)","al-khalf (orqada)","al-wasat (o'rtada)","al-shimal (chapda)"], t:"al-khalf (orqada)"},
+    {s:"أَيْنَ تَامِرٌ؟", i:"Tamir qayerda?", j:["al-wasat (o'rtada)","al-amam (oldinda)","al-khalf (orqada)","al-yamin (o'ngda)"], t:"al-wasat (o'rtada)"},
+    {s:"أَيْنَ الكَلْبُ الكَبِيرُ؟", i:"Katta it qayerda?", j:["al-yamin (o'ngda)","al-shimal (chapda)","al-wasat (o'rtada)","al-amam (oldinda)"], t:"al-yamin (o'ngda)"},
+    {s:"أَيْنَ الكَلْبُ الصَّغِيرُ؟", i:"Kichik it qayerda?", j:["al-shimal (chapda)","al-yamin (o'ngda)","al-khalf (orqada)","al-wasat (o'rtada)"], t:"al-shimal (chapda)"},
+  ],
+  "Felllar": [
+    {s:"هُوَ يَجْرِي → هُمَا ...", i:"U yuguradi → Ikkovi ...", j:["yajriyani","yajriyuna","yajriyu","tajriyani"], t:"yajriyani"},
+    {s:"هُوَ يَجْرِي → هُمْ ...", i:"U yuguradi → Ular ...", j:["yajriyuna","yajriyani","yajriyu","tajriyuna"], t:"yajriyuna"},
+    {s:"هُوَ يَلْعَبُ → هُمَا ...", i:"U o'ynaydi → Ikkovi ...", j:["yal'abani","yal'abuna","yal'abu","tal'abani"], t:"yal'abani"},
+    {s:"هُوَ يَلْعَبُ → هُمْ ...", i:"U o'ynaydi → Ular ...", j:["yal'abuna","yal'abani","yal'abu","tal'abuna"], t:"yal'abuna"},
+    {s:"هُوَ يَكْتُبُ → هُمَا ...", i:"U yozadi → Ikkovi ...", j:["yaktubani","yaktubuna","yaktubu","taktubani"], t:"yaktubani"},
+    {s:"هُوَ يَكْتُبُ → هُمْ ...", i:"U yozadi → Ular ...", j:["yaktubuna","yaktubani","yaktubu","taktubuna"], t:"yaktubuna"},
+  ],
+  "Kunlar": [
+    {s:"Haftaning birinchi kuni?", j:["al-ahad (yakshanba)","al-sabt (shanba)","al-jum'a (juma)","al-isnayn (dushanba)"], t:"al-ahad (yakshanba)"},
+    {s:"Al-isnayn dan keyingi kun?", j:["al-thulatha (seshanba)","al-arbi'a (chorshanba)","al-ahad (yakshanba)","al-khamis (payshanba)"], t:"al-thulatha (seshanba)"},
+    {s:"Haftaning oxirgi kuni?", j:["al-jum'a (juma)","al-sabt (shanba)","al-khamis (payshanba)","al-ahad (yakshanba)"], t:"al-jum'a (juma)"},
+    {s:"Al-arbi'a dan oldingi kun?", j:["al-thulatha (seshanba)","al-khamis (payshanba)","al-isnayn (dushanba)","al-jum'a (juma)"], t:"al-thulatha (seshanba)"},
+    {s:"Al-khamis dan keyingi kun?", j:["al-jum'a (juma)","al-sabt (shanba)","al-arbi'a (chorshanba)","al-ahad (yakshanba)"], t:"al-jum'a (juma)"},
+  ],
+};
+
+let joriyMavzu = null;
+let savollar = [];
+let joriyIndex = 0;
+let ball = 0;
+
+// URL dan mavzu olish
+const urlParams = new URLSearchParams(window.location.search);
+const urlMavzu = urlParams.get('mavzu');
+if (urlMavzu && savollarDB[urlMavzu]) {
+  boshla(urlMavzu);
+}
+
+function mavzuTanlash() {
+  document.getElementById('mavzuScreen').style.display = 'block';
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('natijScreen').style.display = 'none';
+}
+
+function boshla(mavzu) {
+  joriyMavzu = mavzu;
+  savollar = savollarDB[mavzu];
+  joriyIndex = 0;
+  ball = 0;
+  document.getElementById('mavzuScreen').style.display = 'none';
+  document.getElementById('natijScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'flex';
+  savolKo'rsat();
+}
+
+function savolKo'rsat() {
+  const s = savollar[joriyIndex];
+  const jami = savollar.length;
+
+  document.getElementById('progressText').textContent = `${joriyIndex + 1} / ${jami}`;
+  document.getElementById('progressBar').style.width = `${((joriyIndex + 1) / jami) * 100}%`;
+  document.getElementById('savolMatn').textContent = s.s;
+  document.getElementById('savolIzoh').textContent = s.i || '';
+  document.getElementById('natijaMtn').style.display = 'none';
+
+  const javoblarDiv = document.getElementById('javoblar');
+  javoblarDiv.innerHTML = '';
+  s.j.forEach(j => {
+    const btn = document.createElement('button');
+    btn.className = 'javob-btn';
+    btn.textContent = j;
+    btn.onclick = () => javobTanlash(j, btn);
+    javoblarDiv.appendChild(btn);
+  });
+}
+
+function javobTanlash(javob, btn) {
+  const s = savollar[joriyIndex];
+  const barcha = document.querySelectorAll('.javob-btn');
+  barcha.forEach(b => b.disabled = true);
+
+  const natijaMtn = document.getElementById('natijaMtn');
+  natijaMtn.style.display = 'block';
+
+  if (javob === s.t) {
+    ball++;
+    btn.classList.add('togri');
+    natijaMtn.textContent = '✅ To\'g\'ri!';
+    natijaMtn.className = 'natija-matn togri';
+  } else {
+    btn.classList.add('xato');
+    natijaMtn.textContent = `❌ Xato! To'g'ri: ${s.t}`;
+    natijaMtn.className = 'natija-matn xato';
+    // to'g'ri javobni yashil qil
+    barcha.forEach(b => { if (b.textContent === s.t) b.classList.add('togri'); });
+  }
+
+  setTimeout(() => {
+    joriyIndex++;
+    if (joriyIndex >= savollar.length) {
+      natijKo'rsat();
+    } else {
+      savolKo'rsat();
+    }
+  }, 1200);
+}
+
+function natijKo'rsat() {
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('natijScreen').style.display = 'flex';
+  const jami = savollar.length;
+  document.getElementById('ballMatn').textContent = ball;
+  document.getElementById('jamiMatn').textContent = `/ ${jami}`;
+  const foiz = ball / jami;
+  let xabar, izoh;
+  if (foiz === 1)        { xabar = '🏆 Mukammal!';      izoh = 'Barcha savollar to\'g\'ri!'; }
+  else if (foiz >= 0.8)  { xabar = '⭐ Ajoyib!';         izoh = `${ball} ta to'g'ri javob`; }
+  else if (foiz >= 0.6)  { xabar = '👍 Yaxshi!';         izoh = 'Yana bir oz mashq qiling'; }
+  else                   { xabar = '💪 Mashq qiling!';   izoh = 'Yana urinib ko\'ring'; }
+  document.getElementById('natijXabar').textContent = xabar;
+  document.getElementById('natijIzoh').textContent = izoh;
+}
+
+function qaytaBoshla() { boshla(joriyMavzu); }
+
+// Telegram WebApp ga xabar yuborish
+if (window.Telegram && window.Telegram.WebApp) {
+  window.Telegram.WebApp.ready();
+  window.Telegram.WebApp.expand();
+}
+</script>
+</body>
+</html>
